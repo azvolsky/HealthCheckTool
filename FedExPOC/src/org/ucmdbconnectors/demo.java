@@ -1,5 +1,7 @@
 package org.ucmdbconnectors;
 
+import com.HealthCheckTool.FedExPOC.ParseJMXOutput;
+
 /**
  * Created with IntelliJ IDEA.
  * User: asyvorotka
@@ -40,12 +42,16 @@ public class demo {
         jhi.setJmxInvokeMethod("UCMDB:service=Class Model Services", "retrieveClassHierarchy", params);
         jhi.invoke();
         System.out.println(jhi.getResponse());
-        jhi.setPort(8443);
-        jhi.setProtocol("HTTPS");
+        //jhi.setPort(8443);
+        //jhi.setProtocol("HTTPS");
         //jhi.invoke();   this is for https.
-        System.out.println(jhi.getResponse());
+        //System.out.println(jhi.getResponse());
 
         log.closeFile();
+
+        ParseJMXOutput somevariable = new ParseJMXOutput(jhi.getResponse());
+        somevariable.setRegExp("node");
+        System.out.println(somevariable.getMatcher());
     }
 
 }
