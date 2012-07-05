@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FedExPOC.iml" filepath="$PROJECT_DIR$/FedExPOC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HealthCheckTool.iml" filepath="$PROJECT_DIR$/HealthCheckTool.iml" />
     </modules>
   </component>
 </project>

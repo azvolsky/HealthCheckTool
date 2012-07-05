@@ -1,4 +1,4 @@
-package org.ucmdbconnectors;
+package org.healthCheckToolpkg;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,6 +1,4 @@
-package org.ucmdbconnectors;
-
-import com.HealthCheckTool.FedExPOC.ParseJMXOutput;
+package org.healthCheckToolpkg;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,7 +14,7 @@ import com.HealthCheckTool.FedExPOC.ParseJMXOutput;
 //import test.ucmdb.jmx.http.jmxHttpInvoke;
 //import test.ucmdb.util.logger.logger;
 
-public class demo {
+public class healthCheckToolAction {
 
     /**
      * @param args
@@ -49,7 +47,7 @@ public class demo {
 
         log.closeFile();
 
-        ParseJMXOutput somevariable = new ParseJMXOutput(jhi.getResponse());
+        parseJmxOutput somevariable = new parseJmxOutput(jhi.getResponse());
         somevariable.setRegExp("node");
         System.out.println(somevariable.getMatcher());
     }

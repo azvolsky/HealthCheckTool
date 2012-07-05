@@ -1,18 +1,16 @@
-package com.HealthCheckTool.FedExPOC;
+package org.healthCheckToolpkg;
 
 //These are basic classes to be used for parser
 import java.util.ArrayList;
 import java.util.regex.*;
-import java.io.*;
-import java.util.Scanner;
 
-public class ParseJMXOutput /*extends Action*/
+public class parseJmxOutput /*extends Action*/
 {
     private String regExp;
     static int aGroup = 1;
     private String httpResponse;
     //Constructor
-    public ParseJMXOutput (String responseItself){
+    public parseJmxOutput(String responseItself){
         httpResponse = responseItself;
         regExp = "Operation Result:(.*)";  //initializing our RegExp
     }

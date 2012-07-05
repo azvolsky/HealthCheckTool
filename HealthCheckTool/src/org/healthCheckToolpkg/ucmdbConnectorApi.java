@@ -1,4 +1,4 @@
-package org.ucmdbconnectors;
+package org.healthCheckToolpkg;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,8 +26,7 @@ package org.ucmdbconnectors;
 
 import java.net.MalformedURLException;
 
-//import org.ucmdbconnectors.logger;
-import java.net.MalformedURLException;
+//import org.healthCheckToolpkg.logger;
 import com.hp.ucmdb.api.*;
 
 public class ucmdbConnectorApi {

@@ -94,7 +94,7 @@
 //        f = new Formula(1, 10, buf.toString());
 //        sheet.addCell(f);   */
 //
-//        ParseJMXOutput parseJMXOutput = new ParseJMXOutput();
+//        parseJmxOutput parseJMXOutput = new parseJmxOutput();
 //        Matcher m = parseJMXOutput.getMatcher("d:\\XLAM\\DOCS\\CPE\\Health Check Tool\\example_to_parse.html");
 //        m.find();
 //        // Now a bit of text
