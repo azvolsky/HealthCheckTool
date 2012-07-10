@@ -7,5 +7,7 @@ package org.healthCheckToolpkg;
  * Time: 2:23 PM
  * To change this template use File | Settings | File Templates.
  */
+
 public interface invoker {
+    public void invoke();
 }

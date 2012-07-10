@@ -7,5 +7,17 @@ package org.healthCheckToolpkg;
  * Time: 2:30 PM
  * To change this template use File | Settings | File Templates.
  */
-public class resultTab {
+import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+public class resultTab extends JPanel /* implements ActionListener */ {
+    private JTextArea textArea = new JTextArea();
+
+    public resultTab(String text) {
+        textArea.setText(text);
+        add(textArea);
+    }
+
 }

@@ -1,5 +1,8 @@
 package org.healthCheckToolpkg;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: asyvorotka
@@ -31,7 +34,7 @@ public class healthCheckToolAction {
 //              System.out.println(monitors[i]);
 //          con.closeConnect();
 //
-        jmxHttpInvoke jhi = new jmxHttpInvoke();
+        jmxHttpInvoke_old jhi = new jmxHttpInvoke_old();
         jhi.setLog(log);
         jhi.setJmxInvokeCredentials("localhost", 8080, "sysadmin", "sysadmin");
         Object params[] = {"1","node"};//new Object[3];
@@ -47,9 +50,19 @@ public class healthCheckToolAction {
 
         log.closeFile();
 
-        parseJmxOutput somevariable = new parseJmxOutput(jhi.getResponse());
-        somevariable.setRegExp("node");
-        System.out.println(somevariable.getMatcher());
+ //       parseJmxOutput somevariable = new parseJmxOutput(jhi.getResponse());
+  //      somevariable.setRegExp("node");
+   //     System.out.println(somevariable.getMatcher());
+
+        mainForm mf = new mainForm();
+        JFrame f = new JFrame("HealthCheckTool");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container container = f.getContentPane();
+        container.add( mf.getjTabbedPane() );
+        f.setSize(550,450);
+//        f.pack( );
+        f.setLocation(200,200);
+        f.setVisible( true );
     }
 
 }
