@@ -154,7 +154,7 @@ public class jmxHttpInvoke implements invoker {
         setUser(user);
         setPass(pass);
     }
-    //#############################################INTERNAL REALIZATION########################################
+    //#################################################INTERNAL REALIZATION########################################
     private HttpURLConnection httpUrlConnect() throws IOException,ProtocolException {
         String credentials = user+":"+pass;
         String encoding = (new BASE64Encoder()).encode(credentials.getBytes());
@@ -162,6 +162,7 @@ public class jmxHttpInvoke implements invoker {
         connection.setRequestProperty("Authorization", authMethod + " " + encoding);
         connection.setDoOutput(doOutput);
         connection.setRequestMethod(httpMethod);
+
         return connection;
     }
     private HttpsURLConnection httpsUrlConnect() throws IOException,ProtocolException,NoSuchAlgorithmException,KeyManagementException {
