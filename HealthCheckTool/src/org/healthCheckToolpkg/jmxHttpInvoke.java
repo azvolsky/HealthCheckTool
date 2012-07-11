@@ -1,12 +1,34 @@
 package org.healthCheckToolpkg;
 
 /**
- * Created with IntelliJ IDEA.
- * User: azvolskiy
- * Date: 7/10/12
- * Time: 2:22 PM
- * To change this template use File | Settings | File Templates.
- */
+ *Author: Andrew Zvolskiy
+ *Version: 2.0
+ *Date: 8/19/2012
+ *Last Modified Date: 8/19/2012
+ *
+ * This class provide ability to invoke ucmdb jmx method via http requests.
+ * Also was added ability to ignore absence of certificate on client host in case when used https connection.
+ * Class variables:
+ * 	private String host			-		target host ip or dns name where located ucmdb server;
+ *	private	String port			-		ucmdb port(by def 8080);
+ *	private	String user			-		ucmdb jmx user name(by def sysadmin);
+ *	private	String pass			-		ucmdb jmx user password;
+ *	private String service		-		ucmdb jmx service name;
+ *	private String method		-		ucmdb jmx method name in current service;
+ *	private Object params[] 	-		list of method parameters occurs in the same way as it shows in jmx UI;
+ *	private	String response		-		result of invoked jmx method in html view, can be used to check result of invoked method;
+ *	private	String protocol		-		protocol. Can be only HTTP or HTTPS;
+ *	private	String httpMethod	-		HTTP method. Should be "POST";
+ *	private	String authMethod	-		method of web server auth. Should be "Basic";
+ *	private	boolean doOutput	-		Need to clarify it purpose .Should be "true";
+ *	private	logger log			-		Enable logger if not null, else exception message throws to standard out put.
+ *	private static class DefaultTrustManager	-	implementation of interface X509TrustManager, used in httpsUrlConnect()
+ *													to avoid problems with absence of certificate on client host
+ * Class interface:
+ * 	public void invoke()		-		invoke jmx method;
+ * 	public String getResponse() -		get result of invoked method.
+ **/
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +57,6 @@ public class jmxHttpInvoke implements invoker {
     private		String				authMethod			=	"Basic";
     private		boolean				doOutput			=	true;
     private		URL					url;
-    private		HttpURLConnection 	connection;
     private		boolean				httpsWithoutCert	=	true;
     private		logger				log;
 
@@ -55,20 +76,23 @@ public class jmxHttpInvoke implements invoker {
         if(url!=null & params!=null){
             try {
                 if(protocol.equalsIgnoreCase("HTTP")) {
-                    httpUrlConnect();
-                    writeData();
-                    this.response = readData();
+                    HttpURLConnection connection = httpUrlConnect();
+                    writeData(connection);
+                    this.response = readData(connection);
+                    connection.disconnect();
                 }
                 else if(protocol.equalsIgnoreCase("HTTPS")) {
                     try{
+                        HttpsURLConnection connection;
                         if(httpsWithoutCert) {
-                            httpsUrlConnectWithoutCert();
+                            connection = httpsUrlConnectWithoutCert();
                         }
                         else {
-                            httpsUrlConnect();
+                            connection = httpsUrlConnect();
                         }
-                        writeData();
-                        this.response = readData();
+                        writeData(connection);
+                        this.response = readData(connection);
+                        connection.disconnect();
                     }
                     catch(NoSuchAlgorithmException nsae) {
                         logging(nsae);
@@ -92,16 +116,13 @@ public class jmxHttpInvoke implements invoker {
             }
         }
     }
-    public void closeConnection() {
-        connection.disconnect();
-    }
     /**
      *
      * @param appForm	- format: /jmx-console/HtmlAdaptor
      * @throws MalformedURLException
      */
     public void createUrl(String appForm)throws MalformedURLException {
-        this.url = new URL (protocol + "://"+host+":"+port+"appForm");
+        this.url = new URL (protocol + "://"+host+":"+port+appForm);
     }
     /**
      *
@@ -165,13 +186,30 @@ public class jmxHttpInvoke implements invoker {
         return connection;
     }
 
-    private void writeData()throws IOException {
+    private void writeData(HttpURLConnection connection)throws IOException {
         String data = URLEncoder.encode(params, "UTF-8");
         OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
         wr.write(data);
         wr.flush();
     }
-    private String readData() throws IOException {
+    private void writeData(HttpsURLConnection connection)throws IOException {
+        String data = URLEncoder.encode(params, "UTF-8");
+        OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+        wr.write(data);
+        wr.flush();
+    }
+    private String readData(HttpURLConnection connection) throws IOException {
+        StringBuffer response = new StringBuffer();
+        InputStream content = (InputStream)connection.getInputStream();
+        BufferedReader in   = new BufferedReader (new InputStreamReader (content));
+        while (in.readLine() != null) {
+            response.append(in.readLine());
+//			response.append("\n");	// to show formated html
+        }
+
+        return new String(response);
+    }
+    private String readData(HttpsURLConnection connection) throws IOException {
         StringBuffer response = new StringBuffer();
         InputStream content = (InputStream)connection.getInputStream();
         BufferedReader in   = new BufferedReader (new InputStreamReader (content));

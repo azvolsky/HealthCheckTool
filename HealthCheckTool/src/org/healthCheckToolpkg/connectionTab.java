@@ -95,9 +95,10 @@ public class connectionTab extends JPanel  implements ActionListener {
                 StringBuffer str = new StringBuffer();
                 try {
                     BufferedReader inputStream = new BufferedReader(new FileReader(file));
-
-                    while(!inputStream.readLine().isEmpty()) {
-                        str.append(inputStream.readLine());
+                    String temp;
+                    while((temp=inputStream.readLine())!=null) {
+                        System.out.println(temp);
+                        str.append(temp);
                     }
                 }
                 catch(Exception e){
@@ -110,8 +111,11 @@ public class connectionTab extends JPanel  implements ActionListener {
                 catch(Exception e) {
 
                 }
-                mf.getjTabbedPane().setComponentAt(0, new resultTab(jhi.getResult()));
-
+                //and don't forget change file path (D:/github/test/scripts/)
+                //jhi.getResult() - get result operation as String
+                //parseJmxOutput pjo = new parseJmxOutput(jhi.getResult());
+                //List<String>list = pjo.getMatcher();
+                //mf.getjTabbedPane().setComponentAt(0, new resultTab(jhi.getResult()));
             }
 
         }
