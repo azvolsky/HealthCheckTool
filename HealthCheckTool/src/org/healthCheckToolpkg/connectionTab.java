@@ -65,6 +65,7 @@ public class connectionTab extends JPanel  implements ActionListener {
         add(fileDropList);
         add(buttonAccept);
         add(buttonClear);
+
         buttonAccept.addActionListener(this);
         buttonClear.addActionListener(this);
     }
