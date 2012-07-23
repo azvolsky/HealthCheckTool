@@ -75,7 +75,7 @@ public class connectionTab extends JPanel  implements ActionListener {
     private String[] makeFileList() {
         return filerw.fileList(conf.getValueByKey("scenarioPath"));
     }
-    // Show text when user presses ENTER.
+    // Show text when user presses ENTER. fgfg
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource().equals(buttonAccept)) {
             if(protocol.getText().isEmpty() || host.getText().isEmpty() || port.getText().isEmpty() ||
