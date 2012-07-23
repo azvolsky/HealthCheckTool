@@ -20,7 +20,7 @@ public class parseJmxOutput /*extends Action*/
         this.regExp = regularka;
     }
 
-    public ArrayList<String> getMatcher() {
+    public Matcher getMatcher() {
 
         //http://docs.oracle.com/javase/1.4.2/docs/api/java/util/regex/Pattern.html
         //A compiled representation of a regular expression.
@@ -32,8 +32,8 @@ public class parseJmxOutput /*extends Action*/
         //http://docs.oracle.com/javase/1.4.2/docs/api/java/util/regex/Matcher.html
         //An engine that performs match operations on a character sequence by interpreting a Pattern.
         //System.out.print("what is iside " + m.group(1)); //debug m.group
-        //return m.group(1); this was initially
-
+        return m; //this was initially
+/*
         ArrayList<String> str = new ArrayList<String>();
         while(m.find())
         {
@@ -41,5 +41,6 @@ public class parseJmxOutput /*extends Action*/
             str.add(httpResponse.substring(m.start(),m.end()));
         }
         return str;
+*/
     }
 }

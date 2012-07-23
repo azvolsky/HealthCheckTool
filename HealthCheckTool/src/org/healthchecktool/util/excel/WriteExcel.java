@@ -1,4 +1,3 @@
-/*
 package org.healthchecktool.util.excel;
 
 import java.io.File;
@@ -6,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.regex.Matcher;
+
+import org.healthchecktool.util.parser.parseJmxOutput;
 
 import jxl.CellView;
 import jxl.Workbook;
@@ -27,11 +28,12 @@ public class WriteExcel {
     private WritableCellFormat timesBoldUnderline;
     private WritableCellFormat times;
     private String inputFile;
+    private String content;
 
     public WriteExcel(String inputFile) {
-    	setOutputFile(inputFile);
+        setOutputFile(inputFile);
     }
-    
+
     public void setOutputFile(String inputFile) {
         this.inputFile = inputFile;
     }
@@ -50,6 +52,9 @@ public class WriteExcel {
 
         workbook.write();
         workbook.close();
+    }
+    public void setContent(String content) {
+        this.content = content;
     }
 
     private void createLabel(WritableSheet sheet)
@@ -98,13 +103,14 @@ public class WriteExcel {
         buf.append("SUM(B2:B10)");
         f = new Formula(1, 10, buf.toString());
         sheet.addCell(f);   */
- /*
-        ParseJMXOutput parseJMXOutput = new ParseJMXOutput();
-        Matcher m = parseJMXOutput.getMatcher("d:\\XLAM\\DOCS\\CPE\\Health Check Tool\\example_to_parse.html");
+
+        parseJmxOutput parseJMXOutput = new parseJmxOutput(this.content);
+        Matcher m = parseJMXOutput.getMatcher();
         m.find();
         // Now a bit of text
         for (int i = 1; i < 2; i++) {
             // First column
+            System.out.println("\nm.group(1): "+m.group(1));
             addLabel(sheet, 0, i, m.group(1));
             // Second column
             addLabel(sheet, 1, i, "baseline info for comparison<tbd>");
@@ -132,5 +138,3 @@ public class WriteExcel {
     }
 
 }
-
-*/
